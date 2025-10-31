@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API - unt.json</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+        .links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 2em; }
+            .links { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 API للبيانات من unt.json</h1>
+        
+        <div class="info-card">
+            <h3>📊 معلومات الملف</h3>
+            <p><strong>اسم الملف:</strong> unt.json</p>
+            <p><strong>تاريخ الإنشاء:</strong> 2025-10-31 09:18:43</p>
+            <p><strong>المستودع:</strong> api-unt-1761891517</p>
+        </div>
+
+        <div class="links">
+            <a href="https://raw.githubusercontent.com/Sites87733-glitch/api-unt-1761891517/main/data/unt.json" class="btn" target="_blank">
+                📊 البيانات الخام
+            </a>
+            <a href="https://github.com/Sites87733-glitch/api-unt-1761891517" class="btn" target="_blank">
+                💻 المستودع
+            </a>
+            <button class="btn" onclick="refreshData()">
+                🔄 تحديث البيانات
+            </button>
+        </div>
+
+        <h2>📋 معاينة البيانات:</h2>
+        <div id="loading">⏳ جاري تحميل البيانات...</div>
+        <div id="data-preview" style="display: none;"></div>
+        <div id="error" style="display: none; color: red; padding: 20px; text-align: center;"></div>
+    </div>
+
+    <script>
+        function refreshData() {
+            loadData();
+        }
+
+        function loadData() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('data-preview').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+
+            fetch('https://raw.githubusercontent.com/Sites87733-glitch/api-unt-1761891517/main/data/unt.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('فشل في جلب البيانات');
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('data-preview').innerHTML = '<pre>' + 
+                        JSON.stringify(data, null, 2) + '</pre>';
+                    document.getElementById('data-preview').style.display = 'block';
+                })
+                .catch(error => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').innerHTML = 
+                        '❌ خطأ في تحميل البيانات: ' + error.message;
+                    document.getElementById('error').style.display = 'block';
+                });
+        }
+
+        // تحميل البيانات تلقائياً عند فتح الصفحة
+        loadData();
+    </script>
+</body>
+</html>
+        
